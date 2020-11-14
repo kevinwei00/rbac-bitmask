@@ -44,16 +44,22 @@ const permissionsInternal = {
   30: 'perm_30'
 }
 
+let permissionsCached;
+
 export function getPermissions() {
-  const perms = {};
-  const keys = Object.keys(permissionsInternal);
-  for (let i = 0; i < keys.length; i++) {
-    const permissionName = permissionsInternal[keys[i]];
-    if (permissionName) {
-      perms[permissionName] = 1 << parseInt(keys[i]);
+  if (!permissionsCached) {
+    const perms = {};
+    const keys = Object.keys(permissionsInternal);
+    for (let i = 0; i < keys.length; i++) {
+      const permissionName = permissionsInternal[keys[i]];
+      if (permissionName) {
+        perms[permissionName] = 1 << parseInt(keys[i]);
+      }
     }
+    permissionsCached = perms;
   }
-  return perms;
+
+  return permissionsCached;
 }
 
 export function getPermissionsPretty() {
