@@ -79,7 +79,7 @@ export function setRoleBitmask(roleName, permissions) {
   const bitmask = rolesTest[roleName];
   const newBits = permissions.reduce((acc, permissionName) => {
     const bits = getPermissionBits(permissionName);
-    return acc | bits;
+    return bits ? acc | bits : acc;
   }, 0);
   rolesTest[roleName] = bitmask | newBits;
 }
